@@ -1,7 +1,7 @@
 # MUTHUR 6000 // CRT Terminal Emulator
 
 <div align="center">
-  <img src="icon.png" alt="MUTHUR 6000 Icon" width="128" height="128" />
+  <img width="1266" height="1243" alt="icon" src="https://github.com/user-attachments/assets/8f6e3ccc-58c2-4532-a0ac-5da540b2e72c" />
   <br>
   <strong>WEYLAND-YUTANI CORP • NOSTROMO OVERMONITORING MATRIX • 2122</strong>
   <br>
