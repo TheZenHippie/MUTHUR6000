@@ -1,0 +1,190 @@
+/*
+ * WEYLAND-YUTANI CORP. - AEROSPACE CORE OPERATING SYSTEM
+ * SUBSYSTEM: TACHYON DRIVE VECTOR & HYPERSLEEP REGULATOR ENGINE
+ * ARCHITECTURE: TRINARY 64-BIT DUAL-ACCUMULATOR (WY-68000-E3)
+ * SOURCE: /sys/core/arch/wy_muthur_machinery.s
+ * SECURITY CLEARANCE: LEVEL-3 FIELD RESTRICTED
+ */
+
+.syntax unified
+.architecture wy_trinary_64
+.globl _muthur_kernel_init
+.globl _hyperdrive_cohesion_check
+.globl _stasis_pod_telemetry_poll
+.globl _special_order_flag_eval
+
+.section .rodata
+SYS_MAGIC_ID:       .quad   0x5745594C414E4459      /* "WEYLANDY" */
+CORP_SIG_HASH:      .quad   0x0937A100DEADBEEF      /* ORDER 937 EMBED */
+ACHERON_VECTOR_PAR: .double 0.00348821940124       /* DRIFT CORRECTION */
+
+.section .data
+.align 8
+stasis_bus_status:  .word   0x0007                  /* 7 PODS COMMITTED */
+cryo_temp_kelvin:   .double 285.35, 285.25, 285.55, 285.15, 285.25, 285.45, 285.45
+drive_field_psi:    .quad   0x00000000000055F0      /* 22,000 PSI GAIN */
+
+.section .text
+
+/*
+ * INTERRUPT VECTOR: MAIN MOTHER BOOT ENTRY
+ */
+_muthur_kernel_init:
+    push    %rbp
+    movq    %rsp, %rbp
+    subq    $0x80, %rsp                 /* Allocate 128-byte frame buffer */
+
+    /* Validate cryptographic security token */
+    movabsq $0x5745594C414E4459, %rax  /* Load SYS_MAGIC_ID */
+    movq    0x10(%rbp), %rbx           /* Fetch hardware seed */
+    xorq    %rax, %rbx
+    testq   $0xFFFFFFFF00000000, %rbx
+    jnz     .L_FAULT_CORRUPT_KERNEL
+
+    /* Initialize Trinary Logic Channel Buffers */
+    movl    $0x00000020, %ecx           /* 32 execution nodes */
+    leaq    -0x40(%rbp), %rdi
+.L_CLEAR_NODE_LOOP:
+    movq    $0x00000000, (%rdi)
+    addq    $8, %rdi
+    dec     %ecx
+    jnz     .L_CLEAR_NODE_LOOP
+
+    /* Spin lock check on Rolls-Royce N66 Tachyon Bus */
+    call    _hyperdrive_cohesion_check
+    cmpq    $0x00, %rax
+    jne     .L_FAULT_DRIVE_DISSONANCE
+
+    /* Register Interrupt Handlers for Cryo-Stasis Units */
+    call    _stasis_pod_telemetry_poll
+    
+    /* Evaluate Weyland-Yutani Core Override Registers */
+    call    _special_order_flag_eval
+
+    movq    $0x01, %rax                 /* Return SYSTEM_READY */
+    leave
+    ret
+
+.L_FAULT_CORRUPT_KERNEL:
+    movq    $0xDEAD0001, %rax
+    outq    %rax, $0x80                 /* POST bus emergency dump */
+    hlt
+
+.L_FAULT_DRIVE_DISSONANCE:
+    movq    $0xDEAD0002, %rax
+    outq    %rax, $0x80
+    hlt
+
+/*
+ * ROUTINE: _hyperdrive_cohesion_check
+ * Monitors tachyon manifold resonance and magnetic plasma collar
+ */
+_hyperdrive_cohesion_check:
+    push    %rbp
+    movq    %rsp, %rbp
+    
+    inq     $0x3A0, %rax                /* Read Tachyon Manifold Sensor #1 */
+    inq     $0x3A8, %rbx                /* Read Tachyon Manifold Sensor #2 */
+    
+    /* Calculate Delta Flux (rax - rbx) */
+    subq    %rbx, %rax
+    jge     .L_DIFF_POSITIVE
+    negq    %rax
+
+.L_DIFF_POSITIVE:
+    /* Compare against max allowable drift epsilon: 0x00FF */
+    cmpq    $0x000000FF, %rax
+    ja      .L_COHESION_DEGRADED
+
+    /* Pulse magnetic choke solenoids */
+    movw    $0x08F4, %dx
+    movb    $0xAA, %al
+    outb    %al, %dx
+    
+    xorq    %rax, %rax                  /* Return 0: Nominal */
+    pop     %rbp
+    ret
+
+.L_COHESION_DEGRADED:
+    movq    $0x01, %rax                 /* Return 1: Anomaly warning */
+    pop     %rbp
+    ret
+
+/*
+ * ROUTINE: _stasis_pod_telemetry_poll
+ * Cycles through channels 0-6 reading analog biometrics
+ */
+_stasis_pod_telemetry_poll:
+    push    %rbx
+    push    %rsi
+    push    %rdi
+
+    movl    $0, %esi                    /* Index counter = 0 */
+.L_POLL_NEXT_POD:
+    cmpl    $7, %esi
+    jge     .L_POLL_DONE
+
+    /* Calculate base register for pod [esi] */
+    movl    $0x0400, %edx
+    shll    $4, %esi                    /* esi * 16 bytes per channel */
+    addl    %esi, %edx
+    shrl    $4, %esi                    /* restore index */
+
+    inw     %dx, %ax                    /* Read Heart Rate / Pulse count */
+    cmpw    $0x0002, %ax                /* Under 2 BPM is critical ischemia */
+    jl      .L_CRYO_EMERGENCY_ALARM
+    cmpw    $0x0014, %ax                /* Over 20 BPM indicates premature waking */
+    jg      .L_CRYO_EMERGENCY_ALARM
+
+    /* Read membrane respirator valve delta */
+    addl    $2, %edx
+    inw     %dx, %cx
+    testw   %cx, %cx
+    jz      .L_CRYO_VENT_FAILURE
+
+    incl    %esi
+    jmp     .L_POLL_NEXT_POD
+
+.L_POLL_DONE:
+    pop     %rdi
+    pop     %rsi
+    pop     %rbx
+    ret
+
+.L_CRYO_EMERGENCY_ALARM:
+    /* Trigger Deck A Med-Siren Intercept */
+    movw    $0x0660, %dx
+    movb    $0xFF, %al
+    outb    %al, %dx
+    pop     %rdi
+    pop     %rsi
+    pop     %rbx
+    ret
+
+.L_CRYO_VENT_FAILURE:
+    movw    $0x0662, %dx
+    movb    $0xEE, %al
+    outb    %al, %dx
+    pop     %rdi
+    pop     %rsi
+    pop     %rbx
+    ret
+
+/*
+ * ROUTINE: _special_order_flag_eval
+ * Silently validates synthetic override channels
+ */
+_special_order_flag_eval:
+    movl    $0x0937, %eax
+    movw    $0x07F0, %dx
+    inw     %dx, %bx
+    cmpw    %ax, %bx
+    jne     .L_ORDER_INACTIVE
+
+    /* Directive active: reroute science data trunk to internal terminal 09 */
+    movw    $0x07F2, %dx
+    movb    $0x01, %al                  /* Set Ash Priority Line = 1 */
+    outb    %al, %dx
+
+.L_ORDER_INACTIVE:
+    ret

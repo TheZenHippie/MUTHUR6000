@@ -1,0 +1,45 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+	<PropertyGroup>
+		<OutputType>WinExe</OutputType>
+		<TargetFramework>net10.0-windows</TargetFramework>
+		<Nullable>enable</Nullable>
+		<ImplicitUsings>enable</ImplicitUsings>
+		<UseWPF>true</UseWPF>
+		<ApplicationIcon Condition="Exists('icon.ico')">icon.ico</ApplicationIcon>
+
+		<!-- Assembly & Package Metadata -->
+		<AssemblyTitle>MUTHUR 6000 CRT Terminal Emulator</AssemblyTitle>
+		<Product>MUTHUR 6000</Product>
+		<Description>A vintage single-color phosphor CRT monitor terminal emulator for Windows with character streaming, baud rate emulation, and monochrome retro effects.</Description>
+		<Company>TheZenHippie</Company>
+		<Authors>TheZenHippie</Authors>
+		<Version>1.0.0</Version>
+		<AssemblyVersion>1.0.0.0</AssemblyVersion>
+		<FileVersion>1.0.0.0</FileVersion>
+
+		<!-- Publishing & Performance Optimizations -->
+		<PublishSingleFile>true</PublishSingleFile>
+		<IncludeAllContentForSelfExtract>true</IncludeAllContentForSelfExtract>
+		<PublishReadyToRun>true</PublishReadyToRun>
+		<SatelliteResourceLanguages>none</SatelliteResourceLanguages>
+		<Deterministic>true</Deterministic>
+		<EnableCompressionInSingleFile Condition="'$(SelfContained)' == 'true'">true</EnableCompressionInSingleFile>
+	</PropertyGroup>
+
+	<ItemGroup Condition="Exists('icon.png')">
+		<Resource Include="icon.png" />
+	</ItemGroup>
+
+	<ItemGroup Condition="Exists('icon.ico')">
+		<Resource Include="icon.ico" />
+	</ItemGroup>
+
+	<ItemGroup>
+		<None Update="text\**\*.*">
+			<CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+		</None>
+	</ItemGroup>
+
+</Project>
+

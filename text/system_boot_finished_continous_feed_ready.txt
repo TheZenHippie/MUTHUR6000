@@ -1,0 +1,9 @@
+--------------------------------------------------------------------------------
+11. SYSTEM TERMINATION & CONTINUOUS FEED READY
+--------------------------------------------------------------------------------
+INTERFACE READY FOR SERIAL DATA STREAM OUTPUT.
+BAUD RATE EMULATION RECOMMENDED: 300 BAUD / 1200 BAUD / 9600 BAUD.
+PHOSPHOR PERSISTENCE SIMULATION: P31 GREEN OR P4 AMBER MONOCHROME.
+DATA BURST READY...
+AWAITING OPERATOR TERMINAL INPUT...
+_
