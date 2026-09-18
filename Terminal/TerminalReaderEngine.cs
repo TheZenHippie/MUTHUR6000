@@ -69,22 +69,30 @@ namespace MUTHUR6000.Terminal
 
         private static string? FindTextDirectory()
         {
-            string baseDir = AppDomain.CurrentDomain.BaseDirectory;
-            string candidate1 = Path.Combine(baseDir, "text");
-            if (Directory.Exists(candidate1)) return candidate1;
-
-            string cwd = Directory.GetCurrentDirectory();
-            string candidate2 = Path.Combine(cwd, "text");
-            if (Directory.Exists(candidate2)) return candidate2;
-
-            // Search parent directories up to 3 levels (for IDE debug runs)
-            var parent = Directory.GetParent(baseDir);
-            for (int i = 0; i < 3 && parent != null; i++)
+            // 1. Check directory containing the running executable on disk
+            string? exePath = Environment.ProcessPath;
+            if (!string.IsNullOrEmpty(exePath))
             {
-                string candidate3 = Path.Combine(parent.FullName, "text");
-                if (Directory.Exists(candidate3)) return candidate3;
-                parent = parent.Parent;
+                string? exeDir = Path.GetDirectoryName(exePath);
+                if (!string.IsNullOrEmpty(exeDir))
+                {
+                    string candidate1 = Path.Combine(exeDir, "text");
+                    if (Directory.Exists(candidate1)) return candidate1;
+                }
             }
+
+            // 2. Check AppDomain BaseDirectory
+            string baseDir = AppDomain.CurrentDomain.BaseDirectory;
+            if (!string.IsNullOrEmpty(baseDir))
+            {
+                string candidate2 = Path.Combine(baseDir, "text");
+                if (Directory.Exists(candidate2)) return candidate2;
+            }
+
+            // 3. Check current working directory
+            string cwd = Directory.GetCurrentDirectory();
+            string candidate3 = Path.Combine(cwd, "text");
+            if (Directory.Exists(candidate3)) return candidate3;
 
             return null;
         }
@@ -249,6 +257,7 @@ namespace MUTHUR6000.Terminal
                         await Task.Delay(2000, ct);
                     }
                     catch { break; }
+                    RefreshFileList();
                     continue;
                 }
 

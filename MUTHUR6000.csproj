@@ -20,7 +20,6 @@
 
 		<!-- Publishing & Performance Optimizations -->
 		<PublishSingleFile>true</PublishSingleFile>
-		<IncludeAllContentForSelfExtract>true</IncludeAllContentForSelfExtract>
 		<PublishReadyToRun>true</PublishReadyToRun>
 		<SatelliteResourceLanguages>none</SatelliteResourceLanguages>
 		<Deterministic>true</Deterministic>
@@ -38,6 +37,7 @@
 	<ItemGroup>
 		<None Update="text\**\*.*">
 			<CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+			<ExcludeFromSingleFile>true</ExcludeFromSingleFile>
 		</None>
 	</ItemGroup>
 

@@ -93,8 +93,11 @@ $standaloneZip = Join-Path $releaseDir "MUTHUR6000-$tagName-win-x64-Standalone.z
 Compress-Archive -Path "$frameworkDepPublishDir\*" -DestinationPath $frameworkDepZip -Force
 Compress-Archive -Path "$standalonePublishDir\*" -DestinationPath $standaloneZip -Force
 
-# Copy standalone exe to release root for direct download convenience
+# Copy standalone exe and text folder to release root for direct download convenience
 Copy-Item -Path "$standalonePublishDir\MUTHUR6000.exe" -Destination "$releaseDir\MUTHUR6000.exe" -Force
+if (Test-Path $textSrc) {
+    Copy-Item -Path $textSrc -Destination $releaseDir -Recurse -Force
+}
 
 # Generate SHA256 Checksums
 $checksumFile = Join-Path $releaseDir "SHA256SUMS.txt"
