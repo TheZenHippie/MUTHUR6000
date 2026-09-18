@@ -1,5 +1,5 @@
 --------------------------------------------------------------------------------
-5. ENVIRONMENTAL & LIFE SUPPORT TELEMETRY
+				ENVIRONMENTAL & LIFE SUPPORT TELEMETRY
 --------------------------------------------------------------------------------
 LSS MAIN PROCESSOR:       HAMILTON-SUNDSTRAND LIFE-ENVELOPE SYSTEM 8
 PRESSURE (DECKS A/B/C):   101.32 KPA (1.00 ATM) -- UNIFORM

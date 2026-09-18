@@ -1,5 +1,5 @@
 --------------------------------------------------------------------------------
-10. INTERACTIVE TERMINAL LOG - REAL-TIME OPERATIONAL TRANSCRIPT
+		INTERACTIVE TERMINAL LOG - REAL-TIME OPERATIONAL TRANSCRIPT
 --------------------------------------------------------------------------------
 [TERMINAL ECHO: STATION BRIDGE-CONSOLE-01 // OPERATOR: MU-TH-UR 6000]
 

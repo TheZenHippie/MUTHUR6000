@@ -1,5 +1,5 @@
 --------------------------------------------------------------------------------
-6. CREW COMPLEMENT & HYPERSLEEP TELEMETRY
+				CREW COMPLEMENT & HYPERSLEEP TELEMETRY
 --------------------------------------------------------------------------------
 TOTAL CREW COMPLEMENT:    7 PERSONS + 1 DOMESTIC FELINE
 CURRENT PHYSICAL STATE:   PROLONGED STASIS HYPERSLEEP (CRYO-CHAMBER DECK A)

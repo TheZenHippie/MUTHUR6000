@@ -1,5 +1,5 @@
 --------------------------------------------------------------------------------
-7. LONG-RANGE SENSORS & DEEP SPACE SIGNAL INTERCEPT
+			LONG-RANGE SENSORS & DEEP SPACE SIGNAL INTERCEPT
 --------------------------------------------------------------------------------
 SENSOR SUITE SCAN:        WIDE-SPECTRUM INTERFEROMETRY (ACTIVE)
 FREQ SCAN RANGE:          10 KHZ THRU 400 GHZ / TACHYON FLUX INTERCEPT

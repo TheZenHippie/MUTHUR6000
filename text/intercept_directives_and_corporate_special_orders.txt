@@ -1,5 +1,5 @@
 --------------------------------------------------------------------------------
-8. INTERCEPT DIRECTIVES & CORPORATE SPECIAL ORDERS
+			INTERCEPT DIRECTIVES & CORPORATE SPECIAL ORDERS
 --------------------------------------------------------------------------------
 CHECKING WEYLAND-YUTANI SPECIAL CONTINGENCY CODES...
 AUTHENTICATION TOKEN:     0983-WY-SEC-0937-ALPHA

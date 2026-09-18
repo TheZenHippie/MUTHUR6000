@@ -1,5 +1,5 @@
 --------------------------------------------------------------------------------
-4. PROPULSION & REACTOR STATUS
+					PROPULSION & REACTOR STATUS
 --------------------------------------------------------------------------------
 PRIMARY POWER PLANT:      WESTINGHOUSE SATURN V MICRO-FUSION REACTOR (2.8 GW)
 CORE TEMPERATURE:         14.2 MILLION DEGREES KELVIN (CORE EQUILIBRIUM: OK)

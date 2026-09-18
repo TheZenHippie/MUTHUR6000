@@ -1,5 +1,5 @@
 --------------------------------------------------------------------------------
-9. HARDWARE SYSTEM HEALTH & SUBSYSTEM BENCHMARKS
+			HARDWARE SYSTEM HEALTH & SUBSYSTEM BENCHMARKS
 --------------------------------------------------------------------------------
 CPU MATRIX:               32-NODE TRINARY QUANTUM CORE
   - CORE LOAD:            14.2% OVERALL AVERAGE

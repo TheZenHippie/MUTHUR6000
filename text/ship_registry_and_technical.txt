@@ -1,5 +1,5 @@
 --------------------------------------------------------------------------------
-1. SHIP REGISTRY & TECHNICAL SPECIFICATIONS
+				SHIP REGISTRY & TECHNICAL SPECIFICATIONS
 --------------------------------------------------------------------------------
 VESSEL IDENTIFIER:        USCSS NOSTROMO
 REGISTRY NUMBER:          1809246(09)

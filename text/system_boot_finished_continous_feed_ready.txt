@@ -1,5 +1,5 @@
 --------------------------------------------------------------------------------
-11. SYSTEM TERMINATION & CONTINUOUS FEED READY
+				SYSTEM TERMINATION & CONTINUOUS FEED READY
 --------------------------------------------------------------------------------
 INTERFACE READY FOR SERIAL DATA STREAM OUTPUT.
 BAUD RATE EMULATION RECOMMENDED: 300 BAUD / 1200 BAUD / 9600 BAUD.

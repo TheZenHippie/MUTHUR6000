@@ -1,5 +1,5 @@
 --------------------------------------------------------------------------------
-2. GALACTIC POSITION & ASTROGATION TELEMETRY
+				GALACTIC POSITION & ASTROGATION TELEMETRY
 --------------------------------------------------------------------------------
 CURRENT CELESTIAL LOCUS:  GRID SECTOR 4 / UNCHARTED DEEP TRANSIT
 LOCAL SYSTEM:             OUTER RIM BUFFER -- VICINITY ZETA II RETICULI
